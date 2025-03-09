@@ -264,7 +264,66 @@ In Views/Student/Index.cshtml:
 </table>
 
 <a href="@Url.Action("Create", "Student")" class="btn btn-primary">Create New Student</a>
+```
 
+### Create View
+In Views/Student/Create.cshtml:
+```html
+@model StudentMVCApp.Models.Student
+
+<h2>Create Student</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label for="Name">Name</label>
+        <input type="text" class="form-control" id="Name" name="Name" value="@Model.Name" required />
+    </div>
+    <div class="form-group">
+        <label for="Age">Age</label>
+        <input type="number" class="form-control" id="Age" name="Age" value="@Model.Age" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
 
 ```
 
+### Edit View
+In Views/Student/Edit.cshtml:
+```html
+@model StudentMVCApp.Models.Student
+
+<h2>Edit Student</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label for="Name">Name</label>
+        <input type="text" class="form-control" id="Name" name="Name" value="@Model.Name" required />
+    </div>
+    <div class="form-group">
+        <label for="Age">Age</label>
+        <input type="number" class="form-control" id="Age" name="Age" value="@Model.Age" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+</form>
+```
+
+### Delete View
+In Views/Student/Delete.cshtml:
+```html
+@model StudentMVCApp.Models.Student
+
+<h2>Delete Student</h2>
+
+<h3>Are you sure you want to delete this student?</h3>
+
+<div>
+    <h4>@Model.Name</h4>
+    <p>Age: @Model.Age</p>
+</div>
+
+<form method="post">
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a href="@Url.Action("Index", "Student")" class="btn btn-secondary">Cancel</a>
+</form>
+
+```
