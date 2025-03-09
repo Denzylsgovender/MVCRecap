@@ -56,3 +56,41 @@ Add the following connection string for SQLite in appsettings.json:
 "ConnectionStrings": {
     "DefaultConnection": "Data Source=students.db"
 }
+```
+### Create the Database Context and Model
+Create a Student Model
+In the Models folder, create a new class Student.cs with the following code:
+```csharp
+namespace StudentMVCApp.Models
+{
+    public class Student
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int Age { get; set; }
+    }
+}
+
+```
+### Create a StudentDbContext
+In the Data folder, create a new class StudentDbContext.cs:
+
+```csharp
+using Microsoft.EntityFrameworkCore;
+using StudentMVCApp.Models;
+
+namespace StudentMVCApp.Data
+{
+    public class StudentDbContext : DbContext
+    {
+        public StudentDbContext(DbContextOptions<StudentDbContext> options)
+            : base(options)
+        {
+        }
+
+        public DbSet<Student> Students { get; set; }
+    }
+}
+
+```
+
