@@ -2,7 +2,7 @@
 This repository contains a simple ASP.NET MVC application for managing student information. This guide will walk you through setting up the application and implementing CRUD (Create, Read, Update, Delete) operations.
 # StudentMVCApp Setup
 
-## Step 1: Set Up the Project
+## Set Up the Project
 
 ### Create a New ASP.NET Core MVC Project
 
@@ -91,6 +91,180 @@ namespace StudentMVCApp.Data
         public DbSet<Student> Students { get; set; }
     }
 }
+
+```
+
+### Set Up CRUD Operations
+1. Create Controller
+In the Controllers folder, create a new controller StudentController.cs and add the following code:
+
+```csharp
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using StudentMVCApp.Data;
+using StudentMVCApp.Models;
+
+namespace StudentMVCApp.Controllers
+{
+    public class StudentController : Controller
+    {
+        private readonly StudentDbContext _context;
+
+        public StudentController(StudentDbContext context)
+        {
+            _context = context;
+        }
+
+        // GET: Student
+        public IActionResult Index()
+        {
+            var students = _context.Students.ToList();
+            return View(students);
+        }
+
+        // GET: Student/Details
+        public IActionResult Details(int id)
+        {
+            var student = _context.Students.FirstOrDefault(s => s.Id == id);
+            if (student == null)
+            {
+                return NotFound();
+            }
+            return View(student);
+        }
+
+        // GET: Student/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Student/Create
+        [HttpPost]
+        public IActionResult Create([Bind("Name, Age")] Student student)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(student);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(student);
+        }
+
+        // GET: Student/Edit
+        public IActionResult Edit(int id)
+        {
+            var student = _context.Students.FirstOrDefault(s => s.Id == id);
+            if (student == null)
+            {
+                return NotFound();
+            }
+            return View(student);
+        }
+
+        // POST: Student/Edit
+        [HttpPost]
+        public IActionResult Edit(int id, [Bind("Id, Name, Age")] Student student)
+        {
+            if (id != student.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(student);
+                    _context.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!_context.Students.Any(e => e.Id == student.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(student);
+        }
+
+        // GET: Student/Delete
+        public IActionResult Delete(int id)
+        {
+            var student = _context.Students.FirstOrDefault(s => s.Id == id);
+            if (student == null)
+            {
+                return NotFound();
+            }
+            return View(student);
+        }
+
+        // POST: Student/Delete
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            var student = _context.Students.FirstOrDefault(s => s.Id == id);
+            if (student == null)
+            {
+                return NotFound();
+            }
+
+            _context.Students.Remove(student);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+    }
+}
+```
+### Create Views for Each Action
+1. Index View (Display list of students)
+In Views/Student/Index.cshtml:
+```html
+@model IEnumerable<StudentMVCApp.Models.Student>
+
+<h2>Student List</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Details</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in Model)
+        {
+            <tr>
+                <td>@student.Id</td>
+                <td>@student.Name</td>
+                <td>@student.Age</td>
+                <td>
+                    <a href="@Url.Action("Details", "Student", new { id = student.Id })">View Details</a>
+                </td>
+                <td>
+                    <a href="@Url.Action("Edit", "Student", new { id = student.Id })">Edit</a>
+                </td>
+                <td>
+                    <a href="@Url.Action("Delete", "Student", new { id = student.Id })">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="@Url.Action("Create", "Student")" class="btn btn-primary">Create New Student</a>
+
 
 ```
 
