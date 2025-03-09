@@ -338,3 +338,5 @@ Add-Migration InitialCreate
 ```powershell
 Update-Database
 ```
+### Additional Resources
+- [Microsoft Tutorial on ASP.NET Core MVC](https://learn.microsoft.com/en-us/visualstudio/get-started/csharp/tutorial-aspnet-core?view=vs-2022)
