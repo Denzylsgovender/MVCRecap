@@ -47,7 +47,7 @@ app.MapControllerRoute(
     pattern: "{controller=Student}/{action=Index}/{id?}");
 
 app.Run();
-`
+```
 
 ### Add the Connection String in appsettings.json
 
