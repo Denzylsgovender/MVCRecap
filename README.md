@@ -47,3 +47,10 @@ app.MapControllerRoute(
     pattern: "{controller=Student}/{action=Index}/{id?}");
 
 app.Run();
+
+Add the Connection String in appsettings.json
+Add the following connection string for SQLite in appsettings.json:
+```csharp
+"ConnectionStrings": {
+    "DefaultConnection": "Data Source=students.db"
+}
