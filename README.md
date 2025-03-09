@@ -327,3 +327,12 @@ In Views/Student/Delete.cshtml:
 </form>
 
 ```
+
+### Add a Migration: In the Package Manager Console- run:
+```powershell
+Add-Migration InitialCreate
+```
+### Apply the Migration: After the migration is created, apply it to the database:
+```powershell
+Update-Database
+```
