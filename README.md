@@ -73,7 +73,7 @@ namespace StudentMVCApp.Models
 
 ```
 ### Create a StudentDbContext
-In the Data folder, create a new class StudentDbContext.cs:
+Create a Folder called "Data",in the Data folder, create a new class StudentDbContext.cs:
 
 ```csharp
 using Microsoft.EntityFrameworkCore;
@@ -149,7 +149,7 @@ namespace StudentMVCApp.Controllers
                 _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
-            return View(student);
+            return View(new Student());
         }
 
         // GET: Student/Edit
@@ -230,6 +230,8 @@ In Views/Student/Index.cshtml:
 @model IEnumerable<StudentMVCApp.Models.Student>
 
 <h2>Student List</h2>
+
+<a href="@Url.Action("Create", "Student")" class="btn btn-success mb-3">Create New Student</a>
 
 <table class="table">
     <thead>
