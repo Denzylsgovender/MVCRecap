@@ -329,8 +329,22 @@ In Views/Student/Delete.cshtml:
 </form>
 
 ```
+### Details View
+In Views/Student/Details.cshtml:
+```html
+@model StudentMVCApp.Models.Student
 
+<h2>Student Details</h2>
+
+<div>
+    <h3>Name: @Model.Name</h3>
+    <h4>Age: @Model.Age</h4>
+</div>
+
+<a href="@Url.Action("Index", "Student")">Back to Student List</a>
+```
 ### Add a Migration: In the Package Manager Console- run:
+
 ```powershell
 Add-Migration InitialCreate
 ```
