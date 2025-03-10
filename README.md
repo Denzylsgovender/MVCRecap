@@ -41,6 +41,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthorization();
+app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
@@ -136,7 +137,7 @@ namespace StudentMVCApp.Controllers
         // GET: Student/Create
         public IActionResult Create()
         {
-            return View();
+            return View(new Student());
         }
 
         // POST: Student/Create
